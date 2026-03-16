@@ -81,10 +81,10 @@ python3 skills/crypto-price/scripts/crypto_weekly_report.py
 
 **永久配置（添加到 ~/.zshrc）：**
 ```bash
-echo 'export EMAIL_SENDER="gct2026@126.com"' >> ~/.zshrc
-echo 'export EMAIL_SENDER_NAME="OpenClaw Crypto Report"' >> ~/.zshrc
-echo 'export EMAIL_PASSWORD="your_password"' >> ~/.zshrc
-echo 'export EMAIL_RECIPIENT="gct2023@126.com"' >> ~/.zshrc
+echo 'export EMAIL_SENDER="your_email@126.com"' >> ~/.zshrc
+echo 'export EMAIL_SENDER_NAME="Your Name"' >> ~/.zshrc
+echo 'export EMAIL_PASSWORD="your_smtp_password"' >> ~/.zshrc
+echo 'export EMAIL_RECIPIENT="recipient@example.com"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
