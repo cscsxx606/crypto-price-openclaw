@@ -28,7 +28,17 @@ COIN_MAP = {
 # 默认配置
 DEFAULT_COINS = ["BTC", "ETH", "BNB", "SOL", "DOGE"]
 DAYS = 7
-RECIPIENT = "gct2023@126.com"
+
+# 邮箱配置（从环境变量读取，避免硬编码敏感信息）
+# 使用方法：
+# export EMAIL_SENDER="gct2026@126.com"
+# export EMAIL_SENDER_NAME="OpenClaw Crypto Report"
+# export EMAIL_PASSWORD="your_smtp_password"
+# export EMAIL_RECIPIENT="gct2023@126.com"
+RECIPIENT = os.getenv('EMAIL_RECIPIENT', 'gct2023@126.com')
+SENDER_EMAIL = os.getenv('EMAIL_SENDER', 'gct2026@126.com')
+SENDER_NAME = os.getenv('EMAIL_SENDER_NAME', 'OpenClaw Crypto Report')
+SMTP_PASSWORD = os.getenv('EMAIL_PASSWORD')  # 必须设置环境变量
 
 def get_crypto_history(symbol, days=7):
     """获取历史价格数据"""
@@ -254,19 +264,20 @@ def generate_email_content(coins_data):
 
 def send_email(recipient, subject, html_content, attachment_path=None):
     """发送邮件"""
-    # 从环境变量读取邮箱配置
-    sender = os.getenv('EMAIL_126_SENDER', 'gct2023@126.com')
-    password = os.getenv('EMAIL_126_PASSWORD')
+    # 邮箱配置（从环境变量读取）
+    sender = SENDER_EMAIL
+    sender_name = SENDER_NAME
+    password = SMTP_PASSWORD
     smtp_server = 'smtp.126.com'
     smtp_port = 465
     
     if not password:
-        return {"error": "未设置邮箱密码，请设置环境变量 EMAIL_126_PASSWORD"}
+        return {"error": "未设置邮箱密码，请设置环境变量：export EMAIL_PASSWORD='your_password'"}
     
     try:
         # 创建邮件
         msg = MIMEMultipart()
-        msg['From'] = sender
+        msg['From'] = f"{sender_name} <{sender}>"
         msg['To'] = recipient
         msg['Subject'] = subject
         
